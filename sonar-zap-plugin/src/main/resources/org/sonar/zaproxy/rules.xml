@@ -55,8 +55,9 @@ If you want to add a rule, you can, following the model above.
 
         <description> <!-- Corresponding to "<solution>" and "<reference>" of the ZAP report -->
             <![CDATA[<h3>Solution :</h3>
-    <p>Remove the private IP address from the HTTP response body.  For comments, use JSP/ASP comment instead of HTML/JavaScript comment which can be seen by
-    client browsers.</p>
+    <p>Validate that the response does not contain sensitive, personal or user-specific information. If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:
+Cache-Control: no-cache, no-store, must-revalidate, private Pragma: no-cache Expires: 0
+This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request. </p>
     <h3>References:</h3>
     <ul>
     <li><a href="https://tools.ietf.org/html/rfc1918">Address Allocation for Private Internets</a></li>
@@ -65,6 +66,27 @@ If you want to add a rule, you can, following the model above.
         <severity>MINOR</severity>
         <status>READY</status>
         <tag>cweid-200</tag>
+        <tag>wascid-13</tag>
+        <tag>security</tag>
+        <tag>zaproxy</tag>
+    </rule>
+    <rule>
+        <key>10049</key>
+        <name>Cacheability and Retrievability Content</name>
+
+        <description> <!-- Corresponding to "<solution>" and "<reference>" of the ZAP report -->
+            <![CDATA[<h3>Solution :</h3>
+    <p>The response contents are storable by caching components such as proxy servers, and may be retrieved directly from the cache, rather than from the origin server by the caching servers, in response to similar requests from other users.  If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where "shared" caching servers such as "proxy" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance..</p>
+    <h3>References:</h3>
+    <ul>
+     <li><a href="https://tools.ietf.org/html/rfc7234">href="https://tools.ietf.org/html/rfc7234</a></li>
+     <li><a href="https://tools.ietf.org/html/rfc7231">https://tools.ietf.org/html/rfc7231</a></li>
+     <li><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html">http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html (obsoleted by rfc7234)</a></li> 
+    </ul>]]>
+        </description>
+        <severity>MINOR</severity>
+        <status>READY</status>
+        <tag>cweid-524</tag>
         <tag>wascid-13</tag>
         <tag>security</tag>
         <tag>zaproxy</tag>
